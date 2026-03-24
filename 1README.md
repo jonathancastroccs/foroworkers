@@ -1,35 +1,14 @@
 <h1 align="center">
-    <br>
-    <a href="https://easyappointments.org">
-        <img src="https://raw.githubusercontent.com/alextselegidis/easyappointments/develop/logo.png" alt="Easy!Appointments" width="150">
-    </a>
-    <br>
-    Foroworkers
-    <br>
+	<br>
+	<a href="https://sistemaspymesjc.blogspot.com/p/trabaja-con-nosotros.html">
+		<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiPQpKEVIcgJYYEkLe_ZtWgH9VzQooGM4BfFqVtnVXgZxDZfE9xJbZ-FSQQICDuYorTNWg9-Mn864x7YFknZBBol9r5hPmaSUhGkvtx6nZdzT1Mr4rafsaLtT7a1OtG8xmaO2dq7z_-luspdkuySzljLZ1xx12qmU2Yx6zEmY0NiOQCqfZtiroKqRRobrc_/s1280/ingeniero-de-software-.png" alt="WebmasterForum" width="150">
+	</a>
+	<br>
+	Foroworkers
+	<br>
 </h1>
 
 <br>
-
-<h4 align="center">
-    A powerful Open Source Business Forum that can be installed on your server. 
-</h4>
-
-<p align="center">
-  <img alt="GitHub" src="https://img.shields.io/github/license/foroworkers/foroworkers?style=for-the-badge">
-  <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/foroworkers/foroworkers?style=for-the-badge">
-  <img alt="GitHub All Releases" src="https://img.shields.io/github/downloads/foroworkers/Foroworkers/total?style=for-the-badge">
-  <a href="https://discord.gg/ntpz4aRHHy">
-    <img alt="Chat On Discord" src="https://img.shields.io/badge/chat-on%20discord-7289da?style=for-the-badge&logo=discord&logoColor=white">
-  </a>
-</p>
-
-<p align="center">
-  <a href="#about">About</a> •
-  <a href="#features">Features</a> •
-  <a href="#setup">Setup</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#license">License</a>
-</p>
 
 ![screenshot](screenshot.png)
 

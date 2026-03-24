@@ -36,9 +36,9 @@ class HomeController extends Controller
       ->first();
 
       // problem with models query
-       // $forum = Forum::select('forums.forum_name,forum_tittle,forum_description')   
-       //  ->where('id', 1) 
-       //  ->first();
+       $forum = Forum::select('forums.forum_name,forums.forum_tittle,forums.forum_description')   
+        ->where('id', 1) 
+        ->first();
 
         
         if (empty($forum)) {
