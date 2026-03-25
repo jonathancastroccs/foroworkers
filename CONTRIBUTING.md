@@ -10,7 +10,9 @@ Please note we have a code of conduct, please follow it in all your interactions
 - After being successfully reviewed pull requests will be merged to develop branch and will finally be included in an upcoming release.
 
 ## Steps Laravel Project:
+- Install Video Tutorial
 
+https://www.youtube.com/watch?v=U1zIbFJqXHU
 
 - Clone Project
 
@@ -49,6 +51,7 @@ $ php artisan key:generate
 ```bash
 First Step Create New Database Example: foroworkers
 
+APP_LOCALE=en
 PAYPAL_EMAIL=yourpaypalemail
 APP_ENDPOINT=https://sistemaspymesjc.blogspot.com/p/trabaja-con-nosotros.html
 APP_ENDPOINT_LOCAL=

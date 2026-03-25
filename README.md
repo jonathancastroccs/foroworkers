@@ -1,17 +1,17 @@
 <h1 align="center">
-    <br>
-    <a href="https://sistemaspymesjc.blogspot.com/p/trabaja-con-nosotros.html">
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj80lJ2YL2GVpJi0J9bSBGXtwbjx-JXLjA63ZLH5lRzxjuwxYHhXzsKpTU8rjLiAQPq07prlMOiW7c8XKh3Klv91Hf_CM9e8wpuHg7EiqZYNW6utWYKogRHdFTtUnsd4_CAKpMauAPWYMY5kzb18RZgrKzEUs4jgd7g4gJ807oqt5mGhaM2aSxw07wYV3w/s320/foroworkers_logo.png" alt="Foroworkers" width="150">
-    </a>
-    <br>
-    Foroworkers
-    <br>
+  <br>
+  <a href="https://sistemaspymesjc.blogspot.com/p/trabaja-con-nosotros.html">
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj80lJ2YL2GVpJi0J9bSBGXtwbjx-JXLjA63ZLH5lRzxjuwxYHhXzsKpTU8rjLiAQPq07prlMOiW7c8XKh3Klv91Hf_CM9e8wpuHg7EiqZYNW6utWYKogRHdFTtUnsd4_CAKpMauAPWYMY5kzb18RZgrKzEUs4jgd7g4gJ807oqt5mGhaM2aSxw07wYV3w/s320/foroworkers_logo.png" alt="Foroworkers" width="150">
+  </a>
+  <br>
+  Foroworkers
+  <br>
 </h1>
 
 <br>
 
 <h4 align="center">
-    A powerful Open Source Business Forum that can be installed on your server. 
+  A powerful Open Source Business Forum that can be installed on your server. 
 </h4>
 
 <p align="center">
@@ -28,13 +28,14 @@
   <a href="#features">Features</a> •
   <a href="#setup">Setup</a> •
   <a href="#installation">Installation</a> •
-  <a href="#license">License</a>
+  <a href="#access"> Access</a> •
+  <a href="#donations"> Donations</a> •
 </p>
 
 ![screenshot](screenshot.png)
 
-#  # Foroworkers
-Open source Laravel Forum
+## About
+A powerful Open Source Business Forum that can be installed on your server.Open source Laravel Forum
 
 ## Starting 🚀
 
@@ -42,10 +43,10 @@ _These instructions will allow you to get a copy of the project running on your 
 
 ## Demo Web-App :movie_camera: 
 
-* [Demo Reviews Module ](https://www.youtube.com/watch?v=KuaaLIFbkX0)
-* [Demo Laravel](https://www.youtube.com/watch?v=MYZlIE4x8MU)
+* [Install Project ](https://www.youtube.com/watch?v=U1zIbFJqXHU)
 
-### Pre-requirements 📋
+
+## Setup 📋
 
 - PHP 8.3 >=
 - PostgreSQL (Or MySQL)
@@ -96,7 +97,10 @@ $ php artisan key:generate
 ``` 
 
 ```bash
-First Step Create New Database Example: pymesshopjc
+First Step Create New Database Example: foroworkers
+
+APP_LOCALE=en
+PAYPAL_EMAIL=yourpaypalemail
 APP_ENDPOINT=https://sistemaspymesjc.blogspot.com/p/trabaja-con-nosotros.html
 APP_ENDPOINT_LOCAL=
 APP_AUTHOR=jonathancastro
@@ -105,9 +109,22 @@ APP_COPYRIGHT=sistemaspymesjc
 APP_DONATE=https://www.paypal.com/paypalme/programadorjonathan
 APP_PHONE=5804241666224
 
+database connection
+
 DB_DATABASE=foroworkers
 DB_USERNAME=jonathan
 DB_PASSWORD=123
+
+for sending emails
+
+MAIL_MAILER=
+MAIL_HOST=
+MAIL_PORT=
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_ENCRYPTION=
+MAIL_FROM_ADDRESS=
+MAIL_FROM_NAME=
 ```
 
 ```bash
@@ -126,7 +143,7 @@ $ php artisan serve
 ```
 
 
-## Access Web-App:
+## Access:
 
 _Admin: admin@gmail.com
 _Pass: Test1234
