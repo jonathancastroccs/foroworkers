@@ -15,8 +15,9 @@ use App\Models\Message;
 use App\Models\Country;
 use App\Models\PostFree;
 use App\Models\StatisticsSearch;
-
 use App\Models\Forum;
+use App\Models\Course;
+
 
 
 use Illuminate\Support\Facades\DB;
@@ -34,29 +35,37 @@ class HomeController extends Controller
       // $forum = DB::table('forums')
       // ->where('id', 1)
       // ->first();
-      
 
-        $forum = Forum::select('forums.forum_name','forums.forum_tittle','forums.forum_description')
-        ->where('id', 1)
-        ->first();
+
+      $forum = Forum::select('forums.forum_name','forums.forum_tittle','forums.forum_description')
+      ->where('id', 1)
+      ->first();
 
         // print_r($forum);
         // exit;
 
-        
-        if (empty($forum)) {
+  
 
-        return redirect('/register');
+       if (empty($forum) || env('APP_ENV') == 'local') {
 
-        }
+        return redirect('/course/foroworkers/post-questions-and-answers');
 
-       
+      }
+
+
+      // if (empty($forum)) {
+
+      //   return redirect('/register');
+
+      // }
+
+
 
 
 
      // echo __('messages.welcome');
 
-   
+
 
       $categorylastnegocios = Post::select('posts.post_name','posts.url_name','posts.id as postid','mc.maincategory_name','mc.subcategory_id','u.id as userid', 'u.username','u.img','mc.id','mc.maincategory_url','t.type_name','posts.created_at','posts.updated_at','t.type_color')    
       ->join('maincategorys as mc', 'mc.id', '=', 'posts.maincategory_id')
@@ -461,7 +470,7 @@ class HomeController extends Controller
 
 
         return view('home', [
-            'forums' =>  $forum,
+          'forums' =>  $forum,
           'categorylastnegocios' =>  $categorylastnegocios,
           'categorylastservicios' =>   $categorylastservicios,              
         // 'categorys' => $array,
@@ -486,18 +495,18 @@ class HomeController extends Controller
 
        return view('home', [
          'forums' =>  $forum,
-        'categorylastnegocios' =>  $categorylastnegocios,
-        'categorylastservicios' =>   $categorylastservicios,     
+         'categorylastnegocios' =>  $categorylastnegocios,
+         'categorylastservicios' =>   $categorylastservicios,     
         // 'categorys' => $array,
-        'categorys' => $category,
-        'categoryslast' =>  $categorylast,
-        'categoryslastser' =>  $categorylastser,
-        'categorys1' => $category1,
-        'categorys2' => $category2,
-        'categoryslastcom' =>  $categorylastcom,
-        'tablelast' =>  $tablelast       
+         'categorys' => $category,
+         'categoryslast' =>  $categorylast,
+         'categoryslastser' =>  $categorylastser,
+         'categorys1' => $category1,
+         'categorys2' => $category2,
+         'categoryslastcom' =>  $categorylastcom,
+         'tablelast' =>  $tablelast       
       // 'subcategorys' => $subcategory,
-      ]);
+       ]);
      }   
 
 
@@ -667,5 +676,55 @@ class HomeController extends Controller
 
   }
 
+  public function coursesall($coursename)
+{
+
+
+  $course = Course::select('courses.id','courses.course_url','courses.course_name','pensums.pensum_name','pensums.pensum_video','pensums.id as pensum_id','courses.course_img','courses.course_icon','courses.course_body','courses.course_content')
+  ->join('pensums', 'pensums.course_id', '=', 'courses.id')
+  ->join('users_califications_courses', 'users_califications_courses.course_id', '=', 'courses.id')   
+  ->where('courses.course_url', $coursename)    
+  ->firstOrFail();
+
+  $pensum = Course::select('courses.id','courses.course_url','courses.course_name','pensums.pensum_name','pensums.pensum_url','pensums.pensum_video','pensums.id as pensum_id','courses.course_img','courses.course_icon','courses.course_body')
+  ->join('pensums', 'pensums.course_id', '=', 'courses.id')
+  ->join('users_califications_courses', 'users_califications_courses.course_id', '=', 'courses.id') 
+  ->where('courses.course_url', $coursename)
+  ->where('courses.id', $course->id)         
+  ->get();
+
+  
+
+  return view('coursesall', [
+    'courses' => $course,
+    'pensums' => $pensum
+  ]);
+}
+
+  public function coursespensum($coursename,$pensunname)
+  {
+
+   $course = Course::select('courses.id','courses.course_url','courses.course_name','pensums.pensum_name','pensums.pensum_video','pensums.id as pensum_id','courses.course_img','courses.course_icon','courses.course_body','pensums.pensum_kwone','pensums.pensum_kwtwo','pensums.pensum_kwthree','pensums.pensum_url','pensums.pensum_img','courses.promo_url')
+   ->join('pensums', 'pensums.course_id', '=', 'courses.id')
+   ->join('users_califications_courses', 'users_califications_courses.course_id', '=', 'courses.id')  
+   ->where('courses.course_url', $coursename)
+   ->where('pensums.pensum_url', $pensunname)        
+   ->firstOrFail();
+
+   $pensum = Course::select('courses.id','courses.course_url','courses.course_name','pensums.pensum_name','pensums.pensum_url','pensums.pensum_video','pensums.id as pensum_id','courses.course_img','courses.course_icon','courses.course_body','pensums.course_id')
+   ->join('pensums', 'pensums.course_id', '=', 'courses.id')
+   ->join('users_califications_courses', 'users_califications_courses.course_id', '=', 'courses.id') 
+   ->where('courses.course_url', $coursename)
+   ->where('courses.id', $course->id)
+   ->orderBy('pensums.updated_at', 'asc')           
+   ->get();
+
+   return view('coursespensum', [
+    'courses' => $course,
+    'pensums' => $pensum
+  ]);
+
+ }
+
  
-  }
+}

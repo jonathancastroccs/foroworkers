@@ -167,8 +167,8 @@
     @else
 
     <li class="nav-item">
-      <a class="nav-link" href="/cursos">
-        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Cursos</span>             
+      <a class="nav-link" href="/course/foroworkers/installatton-tutorial-step-by-step">
+        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Tutorial</span>             
       </a>
 
     </li>
