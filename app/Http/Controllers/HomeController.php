@@ -44,12 +44,20 @@ class HomeController extends Controller
         // print_r($forum);
         // exit;
 
+  
 
-      if (empty($forum)) {
+       if (empty($forum) || env('APP_ENV') == 'local') {
 
-        return redirect('/register');
+        return redirect('/course/foroworkers/post-questions-and-answers');
 
       }
+
+
+      // if (empty($forum)) {
+
+      //   return redirect('/register');
+
+      // }
 
 
 

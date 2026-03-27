@@ -32,7 +32,7 @@ return new class extends Migration
     	$reply->course_name = 'Foroworkers';
     	$reply->course_img = 'learn-how-to-create-a-forum.png';
     	$reply->course_icon = 'fa-solid circle-play';    	
-      $reply->course_url = 'learn-how-to-create-a-forum';
+      $reply->course_url = 'foroworkers';
       $reply->course_content = '<p>Learn to create an open source forum with the Laravel framework with instructor Jonathan Castro on Udemy</li>      
       </ul>';
       $reply->price_id = 1;
