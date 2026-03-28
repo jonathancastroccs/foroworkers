@@ -18,12 +18,19 @@ use App\Models\StatisticsSearch;
 use App\Models\Forum;
 use App\Models\Course;
 
+// use App\Traits\CheckTutorial;
+
+use App\Tutorial\TutorialInterface;
+
 
 
 use Illuminate\Support\Facades\DB;
 
-class HomeController extends Controller
+class HomeController extends Controller implements TutorialInterface
 {
+
+  // use CheckTutorial;
+
     /**
      * Display a listing of the resource.
      *
@@ -32,33 +39,38 @@ class HomeController extends Controller
     public function index()
     {
 
+       // return redirect()->route('cursospensum', ['cursoname' => 'foroworkers','pensunname' => 'post-questions-and-answers']);
+
       // $forum = DB::table('forums')
       // ->where('id', 1)
       // ->first();
 
-      $tuto_post = new Post;
+      // $tuto_post = new Post;
 
-      $tuto_post->getTutorial();
+      // $tuto_post->getTutorial();
+
+      //tampoco hace redirect usando trait
       // $this->getTutorial();
 
-      $forum = Forum::select('forums.forum_name','forums.forum_tittle','forums.forum_description')
-      ->where('id', 1)
-      ->first();
+      $forum = null;
+
+      // $forum = Forum::select('forums.forum_name','forums.forum_tittle','forums.forum_description')
+      // ->where('id', 1)
+      // ->first();
 
         // print_r($forum);
         // exit;
 
-         if (empty($forum)) {
+      //    if (empty($forum)) {
 
-        return redirect('/course/foroworkers/post-questions-and-answers');
+      //   return redirect('/course/foroworkers/post-questions-and-answers');
 
-         // return redirect('/forum/dominios');
+      //    // return redirect('/forum/dominios');
 
-      }
+      // }
 
-  
 
-      //  if (empty($forum) || env('APP_ENV') == 'local') {
+      // if (empty($forum) || env('APP_ENV') == 'local') {
 
       //   return redirect('/course/foroworkers/post-questions-and-answers');
 
@@ -689,29 +701,29 @@ class HomeController extends Controller
   }
 
   public function coursesall($coursename)
-{
+  {
 
 
-  $course = Course::select('courses.id','courses.course_url','courses.course_name','pensums.pensum_name','pensums.pensum_video','pensums.id as pensum_id','courses.course_img','courses.course_icon','courses.course_body','courses.course_content')
-  ->join('pensums', 'pensums.course_id', '=', 'courses.id')
-  ->join('users_califications_courses', 'users_califications_courses.course_id', '=', 'courses.id')   
-  ->where('courses.course_url', $coursename)    
-  ->firstOrFail();
+    $course = Course::select('courses.id','courses.course_url','courses.course_name','pensums.pensum_name','pensums.pensum_video','pensums.id as pensum_id','courses.course_img','courses.course_icon','courses.course_body','courses.course_content')
+    ->join('pensums', 'pensums.course_id', '=', 'courses.id')
+    ->join('users_califications_courses', 'users_califications_courses.course_id', '=', 'courses.id')   
+    ->where('courses.course_url', $coursename)    
+    ->firstOrFail();
 
-  $pensum = Course::select('courses.id','courses.course_url','courses.course_name','pensums.pensum_name','pensums.pensum_url','pensums.pensum_video','pensums.id as pensum_id','courses.course_img','courses.course_icon','courses.course_body')
-  ->join('pensums', 'pensums.course_id', '=', 'courses.id')
-  ->join('users_califications_courses', 'users_califications_courses.course_id', '=', 'courses.id') 
-  ->where('courses.course_url', $coursename)
-  ->where('courses.id', $course->id)         
-  ->get();
+    $pensum = Course::select('courses.id','courses.course_url','courses.course_name','pensums.pensum_name','pensums.pensum_url','pensums.pensum_video','pensums.id as pensum_id','courses.course_img','courses.course_icon','courses.course_body')
+    ->join('pensums', 'pensums.course_id', '=', 'courses.id')
+    ->join('users_califications_courses', 'users_califications_courses.course_id', '=', 'courses.id') 
+    ->where('courses.course_url', $coursename)
+    ->where('courses.id', $course->id)         
+    ->get();
 
-  
 
-  return view('coursesall', [
-    'courses' => $course,
-    'pensums' => $pensum
-  ]);
-}
+
+    return view('coursesall', [
+      'courses' => $course,
+      'pensums' => $pensum
+    ]);
+  }
 
   public function coursespensum($coursename,$pensunname)
   {
@@ -723,21 +735,21 @@ class HomeController extends Controller
    ->where('pensums.pensum_url', $pensunname)        
    ->firstOrFail();
 
-   $course_end = Course::select('courses.id','courses.course_url','courses.course_name','pensums.pensum_name','pensums.pensum_video','pensums.id as pensum_id','courses.course_img','courses.course_icon','courses.course_body','pensums.pensum_kwone','pensums.pensum_kwtwo','pensums.pensum_kwthree','pensums.pensum_url','pensums.pensum_img','courses.promo_url','pensums.created_at','pensums.id as pemsumid')
-   ->join('pensums', 'pensums.course_id', '=', 'courses.id')
-   ->join('users_califications_courses', 'users_califications_courses.course_id', '=', 'courses.id')  
-   ->where('courses.course_url', $coursename)
-   ->where('pensums.pensum_url', $pensunname)        
-   ->oldest()
-   ->first();
+   // $course_end = Course::select('courses.id','courses.course_url','courses.course_name','pensums.pensum_name','pensums.pensum_video','pensums.id as pensum_id','courses.course_img','courses.course_icon','courses.course_body','pensums.pensum_kwone','pensums.pensum_kwtwo','pensums.pensum_kwthree','pensums.pensum_url','pensums.pensum_img','courses.promo_url','pensums.created_at','pensums.id as pemsumid')
+   // ->join('pensums', 'pensums.course_id', '=', 'courses.id')
+   // ->join('users_califications_courses', 'users_califications_courses.course_id', '=', 'courses.id')  
+   // ->where('courses.course_url', $coursename)
+   // ->where('pensums.pensum_url', $pensunname)        
+   // ->oldest()
+   // ->first();
 
    // print_r($course_end->pemsumid);
 
-   if ($course_end->pemsumid == 3) {
-     
-     return redirect('/register');
+   // if ($course_end->pemsumid == 3) {
 
-   }
+   //   return redirect('/register');
+
+   // }
 
    $pensum = Course::select('courses.id','courses.course_url','courses.course_name','pensums.pensum_name','pensums.pensum_url','pensums.pensum_video','pensums.id as pensum_id','courses.course_img','courses.course_icon','courses.course_body','pensums.course_id')
    ->join('pensums', 'pensums.course_id', '=', 'courses.id')
@@ -753,6 +765,22 @@ class HomeController extends Controller
   ]);
 
  }
+
+ public function getTutorial()
+  {  
+     
+     $forum = Forum::select('forums.forum_name','forums.forum_tittle','forums.forum_description')
+      ->where('id', 1)
+      ->first();  
+      
+       if (empty($forum) || env('APP_ENV') == 'local') {
+
+        return redirect('/course/foroworkers/post-questions-and-answers');        
+
+      }
+
+
+  }
 
  
 }
