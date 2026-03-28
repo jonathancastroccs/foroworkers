@@ -37,12 +37,12 @@ class MainModel extends Model
       ->where('id', 1)
       ->first();
   
+        // los redirect no sirven en los modelos
+      //  if (empty($forum) || env('APP_ENV') == 'local') {
 
-       if (empty($forum) || env('APP_ENV') == 'local') {
+      //   return redirect('/course/foroworkers/post-questions-and-answers');
 
-        return redirect('/course/foroworkers/post-questions-and-answers');
-
-      }
+      // }
 
 	}
 
