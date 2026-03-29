@@ -41,13 +41,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(TutorialInterface $tutorial, CheckTutorial $tuto)
+    // public function index(TutorialInterface $tutorial, CheckTutorial $tuto)
+      public function index()
     {
       // $this->getTuto(1);
 
       // $tutorial->getTutorial();
 
-      $tuto->getTutorial();
+      // $tuto->getTutorial();
 
        // return redirect()->route('cursospensum', ['cursoname' => 'foroworkers','pensunname' => 'post-questions-and-answers']);
 
@@ -62,11 +63,11 @@ class HomeController extends Controller
       //tampoco hace redirect usando trait
       // $this->getTutorial();
 
-      $forum = null;
+      // $forum = null;
 
-      // $forum = Forum::select('forums.forum_name','forums.forum_tittle','forums.forum_description')
-      // ->where('id', 1)
-      // ->first();
+      $forum = Forum::select('forums.forum_name','forums.forum_tittle','forums.forum_description')
+      ->where('id', 1)
+      ->first();
 
         // print_r($forum);
         // exit;
