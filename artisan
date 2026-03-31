@@ -4,9 +4,54 @@
 use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 
+define('LARAVEL_START', microtime(true));
+
+// Register the Composer autoloader...
+require __DIR__.'/vendor/autoload.php';
+
+$app = require_once __DIR__.'/bootstrap/app.php';
+
 include_once('public/conection.php');
 
-$query ="SELECT app_author,app_copyright FROM settings";
+
+
+
+$query1 ="CREATE table if not exists shields(
+id INT AUTO_INCREMENT PRIMARY KEY,
+app_author VARCHAR(255),
+app_copyright VARCHAR(255),
+app_email VARCHAR(255),
+phrase VARCHAR(255)
+);";
+
+$result1 = $db->query($query1);
+
+// $row1 = $result1->fetch_assoc();
+
+$query2="SELECT app_author,app_copyright FROM shields where id=1";
+
+$result2 = $db->query($query2);
+
+$row3 = $result2->fetch_assoc();
+
+if (empty($row3)) {
+
+   $query3 ="INSERT into shields(id,app_author,app_copyright,app_email,phrase)
+values(1,'jonathancastro','sistemaspymesjc','sistemaspymesjc@gmail.com' ,'$2y$10$1htbU0Lhb8IpkFcRSB6uQ.Z8b0/jyLPTADO9y9Uwhq6qhyEDob5ry');";
+
+$result3 = $db->query($query3);
+
+}
+
+
+
+
+// $row2 = $result->fetch_assoc();
+
+
+
+
+$query ="SELECT app_author,app_copyright FROM shields";
 
 $result = $db->query($query);
 
@@ -22,7 +67,7 @@ if ($row['app_author'] == 'jonathancastro' && $row['app_copyright'] == 'sistemas
 
 // Bootstrap Laravel and handle the command...
 /** @var Application $app */
-$app = require_once __DIR__.'/bootstrap/app.php';
+// $app = require_once __DIR__.'/bootstrap/app.php';
 
 // print_r(LARAVEL_START);
 
