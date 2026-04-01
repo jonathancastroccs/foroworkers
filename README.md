@@ -122,20 +122,20 @@ APP_PHONE=5804241666224
 
 database connection
 
-DB_DATABASE=foroworkers
+DB_DATABASE=your_database
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
 
-for sending emails
+for sending emails example sandbox mailtrap
 
-MAIL_MAILER=
-MAIL_HOST=
-MAIL_PORT=
-MAIL_USERNAME=
-MAIL_PASSWORD=
-MAIL_ENCRYPTION=
-MAIL_FROM_ADDRESS=
-MAIL_FROM_NAME=
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=yourusername
+MAIL_PASSWORD=yourpass
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="youremail@gmail.com"
+MAIL_FROM_NAME="${APP_NAME}"
 ```
 
 ```bash
