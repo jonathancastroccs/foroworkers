@@ -33,7 +33,11 @@ class RegisteredUserController extends Controller
      * Display the registration view.
      */
     public function create(): View
-    {    
+    { 
+
+      $forums = Forum::select('forum_name')   
+      ->where('id', 1) 
+      ->first();   
 
       $numberone = rand(1,100);
       $numbertwo = rand(1,100);
@@ -45,7 +49,8 @@ class RegisteredUserController extends Controller
 
       return view('auth.register', [
         'numberone' => $numberone,
-        'numbertwo' => $numbertwo
+        'numbertwo' => $numbertwo,
+        'forum' => $forums
       ]);
 
     }
@@ -132,12 +137,23 @@ class RegisteredUserController extends Controller
           'ip_adress' => $_SERVER['REMOTE_ADDR'],
         ]);
 
+         // $reply = new Forum;
+         // $reply->forum_name = 'Foroworkers';
+         // $reply->forum_tittle = 'Foro de SEO, WebMasters en Español';
+         // $reply->forum_description = 'Foro de SEO en Español, Webmasters, Negocios, Emprendedores, Compra y Venta de Servicios Online, Ofertas, Promociones en foroworkers.com';
+         // $reply->user_id =  $user->id;             
+         // $reply->save();
+
          $reply = new Forum;
-         $reply->forum_name = 'Foroworkers';
-         $reply->forum_tittle = 'Foro de SEO, WebMasters en Español';
-         $reply->forum_description = 'Foro de SEO en Español, Webmasters, Negocios, Emprendedores, Compra y Venta de Servicios Online, Ofertas, Promociones en foroworkers.com';
-         $reply->user_id =  $user->id;             
-         $reply->save();        
+         $reply->forum_name = $request->forum_name;
+         $reply->forum_tittle = $request->forum_tittle;
+         $reply->forum_description = $request->forum_description;
+         $reply->forum_content = $request->forum_content;
+         $reply->user_id =  $user->id;
+         $reply->is_digitalp = $request->is_digitalp;
+         $reply->is_services = $request->is_services;
+         $reply->is_community = $request->is_community;                 
+         $reply->save();           
 
          event(new Registered($user));
 

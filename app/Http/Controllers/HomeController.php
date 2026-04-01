@@ -72,20 +72,18 @@ class HomeController extends Controller
         // print_r($forum);
         // exit;
 
-      //    if (empty($forum)) {
+         if (empty($forum)) {
 
-      //   return redirect('/course/foroworkers/post-questions-and-answers');
-
-      //    // return redirect('/forum/dominios');
-
-      // }
-
-
-      if (empty($forum) || env('APP_ENV') == 'local') {
-
-        return redirect('/course/foroworkers/installatton-tutorial-step-by-step');
+         return redirect('/course/foroworkers/installatton-tutorial-step-by-step');
 
       }
+
+
+      // if (empty($forum) || env('APP_ENV') == 'local') {
+
+      //   return redirect('/course/foroworkers/installatton-tutorial-step-by-step');
+
+      // }
 
 
       // if (empty($forum)) {
