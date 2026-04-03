@@ -100,6 +100,8 @@ crossorigin=""/> --}}
 
 			<div class="col-4 offset-1">
 
+				<script charset="UTF-8" type="text/javascript"  src="{{URL(env('APP_ENDPOINT_FACTORY'))}}/api/widget?api_key="+API_KEY_FACTORY></script>
+
 				@if(empty($forums))
 				{{-- <p>uno</p> --}}
 				<h1 class="h1">Foro de SEO, WebMasters en Español</h1>
@@ -139,6 +141,8 @@ crossorigin=""/> --}}
 {{-- </div> --}}
 
 
+
+
 @endif
 <br>
 @if(Auth::user() == null)
@@ -156,7 +160,7 @@ crossorigin=""/> --}}
 					</a>de todo el mundo estan comprando y vendiendo servicios con su talento digital, unete a la red de profesionales creando nuevas oportunidades de negocios</p>
 			{{-- <hr> --}}
 			<div class="col-8 offset-2">  
-				<div id="mapi" style="width: 100%;height: 380px;box-shadow: 5px 5px 5px #888;"></div>
+				<div id="mapid" style="width: 100%;height: 380px;box-shadow: 5px 5px 5px #888;"></div>
 
 				
 			</div>
@@ -596,7 +600,11 @@ crossorigin=""/> --}}
 	@include('inc/footer')
 
 
-	@if(!Auth::user())   
+	@if(!Auth::user()) 
+
+	{{-- <script charset="UTF-8" type="text/javascript"  src="{{URL(env('APP_ENDPOINT_FACTORY'))}}/api/widget?api_key="+API_KEY_FACTORY></script> --}}
+
+
 
 	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
 	integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
