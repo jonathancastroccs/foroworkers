@@ -6,37 +6,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
-{
-	use HasFactory;
+{	
 
 	protected $table = 'categorys';
 
-	// public $timestamps = false;
 
 	protected $fillable = [		
-		'category_name'
-		// 'created_at',
-		// 'updated_at'
-		// 'client_name',
-		// 'client_phone',
-		// 'client_email',
-		// 'client_address',
-		// 'project_name'
+		'category_name'		
 	];
 
-	// public function quotes(){
+	public function getCategorys($options)
+	{
+		return Category::select('categorys.category_name','sc.subcategory_name','mc.maincategory_icon','mc.maincategory_name','mc.maincategory_url')
+		->join('subcategorys as sc', 'sc.category_id', '=', 'categorys.id')
+		->join('maincategorys as mc', 'mc.subcategory_id', '=', 'sc.id')
+		->where('mc.subcategory_id', $options)
+		->get();
+	}
+
 	
-	// 	return $this->hasMany(Quote::class);
-	// }
-
-	// public function users()
- //    {
-
- //    	// se referencia a la tabla pivot users_products y no a los id
- //    	return $this->belongsToMany(User::class, 'users_products');
-
- //        // return $this->belongsToMany(User::class, 'user_id');
-
- //        // return $this->belongsToMany(User::class);
- //    }
 }

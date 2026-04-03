@@ -601,6 +601,8 @@
 
         let APP_A = "{{env('APP_AUTHOR')}}";
 
+        let API_KEY_FACTORY = "{{env('API_KEY_FACTORY')}}";
+
         let MSG_B = "@lang('main.msg_business')"; 
 
         let MSG_C = "@lang('main.msg_community')";       
