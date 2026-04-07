@@ -148,6 +148,7 @@ class RegisteredUserController extends Controller
           'json' => [
             'forum_name' => 'John Doe',
             'forum_website' => $_SERVER['HTTP_HOST'],
+            'software_id' => 1,
             'user_id' => $user->id,
             'img' => 'admin.png',
             'banner' => 'userbanner.png',        
@@ -185,17 +186,17 @@ class RegisteredUserController extends Controller
          // $reply->user_id =  $user->id;             
          // $reply->save();
 
-         // $reply = new Forum;
-         // $reply->forum_name = $request->forum_name;
-         // $reply->forum_tittle = $request->forum_tittle;
-         // $reply->forum_description = $request->forum_description;
-         // $reply->forum_content = $request->forum_content;
-         // $reply->user_id =  $user->id;
-         // $reply->is_digitalp = $request->is_digitalp;
-         // $reply->is_services = $request->is_services;
-         // $reply->is_community = $request->is_community;
-         // // $reply->forum_api_key = 'sdk_123$$';                        
-         // $reply->save();
+         $reply = new Forum;
+         $reply->forum_name = $request->forum_name;
+         $reply->forum_tittle = $request->forum_tittle;
+         $reply->forum_description = $request->forum_description;
+         $reply->forum_content = $request->forum_content;
+         $reply->user_id =  $user->id;
+         $reply->is_digitalp = $request->is_digitalp;
+         $reply->is_services = $request->is_services;
+         $reply->is_community = $request->is_community;
+         // $reply->forum_api_key = 'sdk_123$$';                        
+         $reply->save();
 
 
 
@@ -243,45 +244,45 @@ class RegisteredUserController extends Controller
           'ip_adress' => $_SERVER['REMOTE_ADDR'],
         ]);
 
-         $client = new Client();
-         $response = $client->post(env('APP_ENDPOINT_FACTORY').'/api/register/leads', [
+        $client = new Client();
+        $response = $client->post(env('APP_ENDPOINT_FACTORY').'/api/register/leads', [
           'headers' => [
         // 'Authorization' => 'Bearer your-token',
             'Accept'        => 'application/json',
           ],
           'json' => [
             'img' => 'user.png',
-          'banner' => 'userbanner.png',
+            'banner' => 'userbanner.png',
         // 'username' => $request->username,
           // 'username' => $usernamelower,
-          'username' => $username_final,
+            'username' => $username_final,
         // 'email' => $request->email,
-          'email' => $emaillower,
-          'email_verified_at' => now(),         
-          'password' => Hash::make($request->password),
-          'token' =>  $random_token,
-          'role_id' => 2,
-          'country_id' => 1, 
-          'statu_id' => 0,
-          'is_buyer' => 0,
+            'email' => $emaillower,
+            'email_verified_at' => now(),         
+            'password' => Hash::make($request->password),
+            'token' =>  $random_token,
+            'role_id' => 2,
+            'country_id' => 1, 
+            'statu_id' => 0,
+            'is_buyer' => 0,
         // 'theme_color' => 'white',
-          'theme_color' => 'gray',
-          'rank_id' => 1,
-          'membership_start' => null,
-          'membership_end' => null,
-          'remember_token' => Str::random(10),
-          'terms' => 1,
-          'is_verified' => 0,
+            'theme_color' => 'gray',
+            'rank_id' => 1,
+            'membership_start' => null,
+            'membership_end' => null,
+            'remember_token' => Str::random(10),
+            'terms' => 1,
+            'is_verified' => 0,
         // 'is_ignored' => 0,
-          'is_banned' => 0,
-          'reason_id' => 1,
-          'url_profile' => null,
-          'url_patreon' => null,
-          'ip_adress' => $_SERVER['REMOTE_ADDR'],
+            'is_banned' => 0,
+            'reason_id' => 1,
+            'url_profile' => null,
+            'url_patreon' => null,
+            'ip_adress' => $_SERVER['REMOTE_ADDR'],
           ],
         ]);
 
-         $body = json_decode($response->getBody()->getContents(), true);
+        $body = json_decode($response->getBody()->getContents(), true);
 
       }else{
 
@@ -317,44 +318,44 @@ class RegisteredUserController extends Controller
         ]);
 
         $client = new Client();
-         $response = $client->post(env('APP_ENDPOINT_FACTORY').'/api/register/leads', [
+        $response = $client->post(env('APP_ENDPOINT_FACTORY').'/api/register/leads', [
           'headers' => [
         // 'Authorization' => 'Bearer your-token',
             'Accept'        => 'application/json',
           ],
           'json' => [
             'img' => 'user.png',
-          'banner' => 'userbanner.png',
+            'banner' => 'userbanner.png',
         // 'username' => $request->username,
           // 'username' => $usernamelower,
-          'username' => $username_final,
+            'username' => $username_final,
         // 'email' => $request->email,
-          'email' => $emaillower,
-          'email_verified_at' => now(),         
-          'password' => Hash::make($request->password),
-          'token' =>  $random_token,
-          'role_id' => 2,
-          'country_id' => 1, 
-          'statu_id' => 0,
-          'is_buyer' => 0,
+            'email' => $emaillower,
+            'email_verified_at' => now(),         
+            'password' => Hash::make($request->password),
+            'token' =>  $random_token,
+            'role_id' => 2,
+            'country_id' => 1, 
+            'statu_id' => 0,
+            'is_buyer' => 0,
         // 'theme_color' => 'white',
-          'theme_color' => 'gray',
-          'rank_id' => 1,
-          'membership_start' => null,
-          'membership_end' => null,
-          'remember_token' => Str::random(10),
-          'terms' => 1,
-          'is_verified' => 0,
+            'theme_color' => 'gray',
+            'rank_id' => 1,
+            'membership_start' => null,
+            'membership_end' => null,
+            'remember_token' => Str::random(10),
+            'terms' => 1,
+            'is_verified' => 0,
         // 'is_ignored' => 0,
-          'is_banned' => 0,
-          'reason_id' => 1,
-          'url_profile' => null,
-          'url_patreon' => null,
-          'ip_adress' => $_SERVER['REMOTE_ADDR'],
+            'is_banned' => 0,
+            'reason_id' => 1,
+            'url_profile' => null,
+            'url_patreon' => null,
+            'ip_adress' => $_SERVER['REMOTE_ADDR'],
           ],
         ]);
 
-         $body = json_decode($response->getBody()->getContents(), true);
+        $body = json_decode($response->getBody()->getContents(), true);
 
 
       }

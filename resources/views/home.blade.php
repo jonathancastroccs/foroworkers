@@ -102,7 +102,7 @@ crossorigin=""/> --}}
 
 				{{-- <script charset="UTF-8" type="text/javascript"  src="{{URL(env('APP_ENDPOINT_FACTORY'))}}/api/widget?api_key="+API_KEY_FACTORY></script> --}}
 
-				<script charset="UTF-8" type="text/javascript"  src="{{URL(env('APP_ENDPOINT_FACTORY'))}}/api/widget?api_key={{ $forums->forum_api_key }}"></script>
+				{{-- <script charset="UTF-8" type="text/javascript"  src="{{URL(env('APP_ENDPOINT_FACTORY'))}}/api/widget?api_key={{ $forums->forum_api_key }}"></script> --}}
 
 				@if(empty($forums))
 				{{-- <p>uno</p> --}}
@@ -219,8 +219,8 @@ crossorigin=""/> --}}
 	</div>
 </div> --}}
 <div class="row offset-2">
-	<div class="">
-		{{-- <form> --}}
+	{{-- <div class="">
+	
 			<form method="POST" action="" id="logForm">
      
 
@@ -234,7 +234,9 @@ crossorigin=""/> --}}
     </div>
 </form>
 
-	</div>
+	</div> --}}
+
+			<script charset="UTF-8" type="text/javascript"  src="{{URL(env('APP_ENDPOINT_FACTORY'))}}/api/modules/search?api_key={{ $users->api_key_factory }}&website={{ $websites }}&{{ $forums->user_id }}"></script>
 </div>
 
 

@@ -18,16 +18,16 @@ return new class extends Migration
 
          Schema::create('forums', function (Blueprint $table) {
           $table->id();        
-          $table->string('forum_name');
+          $table->string('forum_name')->unique();
           $table->string('forum_tittle');
           $table->string('forum_description');
           $table->longText('forum_content')->nullable();
             // $table->longText('course_body')->nullable();
-          $table->unsignedInteger('user_id');
+          $table->unsignedInteger('user_id')->unique();
           $table->boolean('is_digitalp'); 
           $table->boolean('is_services'); 
           $table->boolean('is_community');
-          $table->string('forum_api_key')->nullable();     		            
+          // $table->string('forum_api_key')->nullable();     		            
           $table->timestamps();
       });
 
