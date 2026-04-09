@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\DB;
 
 // use App\Http\Controllers\GuzzleHttp\Client;
 
-  use GuzzleHttp\Client;
+use GuzzleHttp\Client;
 
 // class HomeController extends Controller implements TutorialInterface
 class HomeController extends Controller
@@ -136,9 +136,11 @@ class HomeController extends Controller
 
       // $forum = null;
 
-      $forum = Forum::select('forums.forum_name','forums.forum_tittle','forums.forum_description','forums.forum_content','forums.is_digitalp','forums.is_services','forums.is_community','forums.forum_api_key')
+      $forum = Forum::select('forums.forum_name','forums.forum_tittle','forums.forum_description','forums.forum_content','forums.is_digitalp','forums.is_services','forums.is_community','forums.user_id')
       ->where('id', 1)
       ->first();
+
+      $website = $_SERVER['HTTP_HOST'];
 
 
         // print_r($forum);
@@ -149,6 +151,31 @@ class HomeController extends Controller
        return redirect('/course/foroworkers/installatton-tutorial-step-by-step');
 
      }
+
+     $user = user::select('users.id','users.api_key_factory')
+     ->where('id', $forum->user_id)
+     ->firstOrFail();
+
+
+     
+
+       $endpoint = env('APP_ENDPOINT_FACTORY').'/api/modules/seo?api_key='.$user->api_key_factory.'&website='.$website.'&user_id='.$forum->user_id;      
+
+      $client = new \GuzzleHttp\Client(); 
+
+      $response = $client->request('GET', $endpoint);
+
+        $ms_contents = json_decode($response->getBody()->getContents());
+
+        $m_seo = $ms_contents;
+
+      // print_r($contents);
+
+      // exit;
+
+
+
+
 
 
       // if (empty($forum) || env('APP_ENV') == 'local') {
@@ -381,6 +408,9 @@ class HomeController extends Controller
 
       return view('home', [
         'forums' =>  $forum,
+        'websites' =>  $website,
+        'users' =>  $user,
+        'm_seos' =>  $ms_contents,
         'categorylastnegocios' =>  $categorylastnegocios,
         'categorylastservicios' =>   $categorylastservicios,              
         // 'categorys' => $array,
@@ -405,6 +435,9 @@ class HomeController extends Controller
 
      return view('home', [
        'forums' =>  $forum,
+       'websites' =>  $website,
+       'users' =>  $user,
+       'm_seos' =>  $ms_contents,
        'categorylastnegocios' =>  $categorylastnegocios,
        'categorylastservicios' =>   $categorylastservicios,     
         // 'categorys' => $array,

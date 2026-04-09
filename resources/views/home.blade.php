@@ -21,10 +21,10 @@
 <meta property="og:description" content="{{ $forums->forum_description }}" /> --}}
 
 @else 
+
+@if(!empty($m_seos->is_active))
   
 <title>{{ $forums->forum_tittle }}</title>
-{{-- <title>Foro de SEO, WebMasters en Español</title> --}}
-
     
 
 <link rel="canonical" href="{{env('APP_URL')}}" />
@@ -33,11 +33,12 @@
 
 <meta name="description" content="{{ $forums->forum_description }}">
 
-{{-- <meta name="description" content="Foro de SEO en Español, Webmasters, Negocios, Emprendedores, Compra y Venta de Servicios Online, Ofertas, Promociones en foroworkers.com"> --}}
-
 
 <meta property="og:title" content="{{ $forums->forum_tittle }}" />
 <meta property="og:description" content="{{ $forums->forum_description }}" />
+
+@endif
+
 
 @endif
 
@@ -102,7 +103,7 @@ crossorigin=""/> --}}
 
 				{{-- <script charset="UTF-8" type="text/javascript"  src="{{URL(env('APP_ENDPOINT_FACTORY'))}}/api/widget?api_key="+API_KEY_FACTORY></script> --}}
 
-				<script charset="UTF-8" type="text/javascript"  src="{{URL(env('APP_ENDPOINT_FACTORY'))}}/api/widget?api_key={{ $forums->forum_api_key }}"></script>
+				{{-- <script charset="UTF-8" type="text/javascript"  src="{{URL(env('APP_ENDPOINT_FACTORY'))}}/api/widget?api_key={{ $forums->forum_api_key }}"></script> --}}
 
 				@if(empty($forums))
 				{{-- <p>uno</p> --}}
@@ -218,23 +219,9 @@ crossorigin=""/> --}}
 	</a>
 	</div>
 </div> --}}
-<div class="row offset-2">
-	<div class="">
-		{{-- <form> --}}
-			<form method="POST" action="" id="logForm">
-     
+<div class="row offset-2">	
 
-		<div class="input-group">
-            <input type="text" id="findPost" class="form-control" placeholder="Buscar Tema">
-            <div class="input-group-append">
-              <button class="btn btn-danger" type="submit">
-                <i class="fa fa-search"></i>
-            </button>
-        </div>
-    </div>
-</form>
-
-	</div>
+			<script charset="UTF-8" type="text/javascript"  src="{{URL(env('APP_ENDPOINT_FACTORY'))}}/api/modules/search?api_key={{ $users->api_key_factory }}&website={{ $websites }}&user_id={{ $forums->user_id }}"></script>
 </div>
 
 

@@ -20,7 +20,7 @@ class Forum extends MainModel
 		'is_digitalp',
 		'is_services',
 		'is_community',
-		'forum_api_key'		
+		'software_id'		
 	];	
 
 	
