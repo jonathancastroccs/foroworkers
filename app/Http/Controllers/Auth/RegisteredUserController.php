@@ -27,10 +27,24 @@ use App\Models\Forum;
 
 use GuzzleHttp\Client;
 
+use App\Http\Services\ModuleService;
+
 
 
 class RegisteredUserController extends Controller
 {
+
+
+ protected $moduleService;
+ 
+
+ public function __construct(ModuleService $moduleService){
+
+  $this->moduleService = $moduleService;
+  
+
+
+}
     /**
      * Display the registration view.
      */
@@ -108,56 +122,32 @@ class RegisteredUserController extends Controller
 
       if ($total1 == $request->totalsum) {
 
-        $adminuser = User::select('username')   
-        ->where('role_id', 1) 
-        ->first();
+        //mejorar esto
+        // $adminuser = User::select('username')   
+        // // ->where('role_id', 1)
+        // ->where('role_id', 2)  
+        // ->first();
 
-        if ($adminuser->username == 'admindemo') {
+        // borrar esto despues
+        // if ($adminuser->username == 'admindemo') {
 
-          User::where('username', 'admindemo')->delete();
+        //   User::where('username', 'admindemo')->delete();
 
-           }
+        // }
 
-        if (empty($adminuser)) {
+        $users = User::all();
+        
 
-         $user = User::create([
-          'img' => 'admin.png',
-          'banner' => 'userbanner.png',        
-          'username' => $usernameadmin_final,       
-          'email' => $emaillower,
-          'email_verified_at' => now(),         
-          'password' => Hash::make($request->password),
-          'token' =>  $random_token,
-          'role_id' => 1,
-          'country_id' => 7, 
-          'statu_id' => 0,
-          'is_buyer' => 0,
-          'theme_color' => 'white',
-          'theme_color' => 'gray',
-          'rank_id' => 1,
-          'membership_start' => null,
-          'membership_end' => null,
-          'remember_token' => Str::random(10),
-          'terms' => 1,
-          'is_verified' => 0,       
-          'is_banned' => 0,
-          'reason_id' => 1,
-          'url_profile' => 'https://www.upwork.com/freelancers/~016c272f36ca6d79ee',
-          'url_patreon' => 'https://www.patreon.com/c/foroworkers',
-          'ip_adress' => $_SERVER['REMOTE_ADDR'],
-        ]);
+        // if (empty($adminuser)) {
+        if ($users->isEmpty()) {
 
-         $client = new Client();
-         $response = $client->post(env('APP_ENDPOINT_FACTORY').'/api/register', [
-          'headers' => [
-        // 'Authorization' => 'Bearer your-token',
-            'Accept'        => 'application/json',
-          ],
-          'json' => [
-            'forum_name' => 'John Doe',
-            'forum_website' => $_SERVER['HTTP_HOST'],
-            'software_id' => 1,
-            'user_id' => $user->id,
+          $ms_users_total = $this->moduleService->responseGetAllPublic('/api/modules/getusers');
+
+          $newuserid = $ms_users_total+1;
+
+          // se suma uno mas por el autoincrement de la pk
+          $user = User::create([
+            // 'id' => $newuserid-1,
             'img' => 'admin.png',
             'banner' => 'userbanner.png',        
             'username' => $usernameadmin_final,       
@@ -182,10 +172,48 @@ class RegisteredUserController extends Controller
             'url_profile' => 'https://www.upwork.com/freelancers/~016c272f36ca6d79ee',
             'url_patreon' => 'https://www.patreon.com/c/foroworkers',
             'ip_adress' => $_SERVER['REMOTE_ADDR'],
-          ],
-        ]);
+          ]);
 
-         $body = json_decode($response->getBody()->getContents(), true);
+          $client = new Client();
+          $response = $client->post(env('APP_ENDPOINT_FACTORY').'/api/register', [
+            'headers' => [
+        // 'Authorization' => 'Bearer your-token',
+              'Accept'        => 'application/json',
+            ],
+            'json' => [
+              'forum_name' => 'John Doe',
+              'forum_website' => $_SERVER['HTTP_HOST'],
+              'software_id' => 1,
+            // 'user_id' => $user->id,
+              'user_id' => $newuserid,
+              'img' => 'admin.png',
+              'banner' => 'userbanner.png',        
+              'username' => $usernameadmin_final,       
+              'email' => $emaillower,
+              'email_verified_at' => now(),         
+              'password' => Hash::make($request->password),
+              'token' =>  $random_token,
+              'role_id' => 1,
+              'country_id' => 7, 
+              'statu_id' => 0,
+              'is_buyer' => 0,
+              'theme_color' => 'white',
+              'theme_color' => 'gray',
+              'rank_id' => 1,
+              'membership_start' => null,
+              'membership_end' => null,
+              'remember_token' => Str::random(10),
+              'terms' => 1,
+              'is_verified' => 0,       
+              'is_banned' => 0,
+              'reason_id' => 1,
+              'url_profile' => 'https://www.upwork.com/freelancers/~016c272f36ca6d79ee',
+              'url_patreon' => 'https://www.patreon.com/c/foroworkers',
+              'ip_adress' => $_SERVER['REMOTE_ADDR'],
+            ],
+          ]);
+
+          $body = json_decode($response->getBody()->getContents(), true);
 
          // $reply = new Forum;
          // $reply->forum_name = 'Foroworkers';
@@ -194,72 +222,46 @@ class RegisteredUserController extends Controller
          // $reply->user_id =  $user->id;             
          // $reply->save();
 
-         $reply = new Forum;
-         $reply->forum_name = $request->forum_name;
-         $reply->forum_tittle = $request->forum_tittle;
-         $reply->forum_description = $request->forum_description;
-         $reply->forum_content = $request->forum_content;
-         $reply->user_id =  $user->id;
-         $reply->is_digitalp = $request->is_digitalp;
-         $reply->is_services = $request->is_services;
-         $reply->is_community = $request->is_community;
+          $reply = new Forum;
+          $reply->forum_name = $request->forum_name;
+          $reply->forum_tittle = $request->forum_tittle;
+          $reply->forum_description = $request->forum_description;
+          $reply->forum_content = $request->forum_content;
+         // $reply->user_id =  $user->id;
+          $reply->user_id =  $newuserid;
+          $reply->is_digitalp = $request->is_digitalp;
+          $reply->is_services = $request->is_services;
+          $reply->is_community = $request->is_community;
          // $reply->software_id = 1;
          // $reply->forum_api_key = 'sdk_123$$';                        
-         $reply->save();
+          $reply->save();
+
+          $mailData = [
+            'title' => 'Verificar Email',
+            'body' => 'Necesitamos asegurarnos de que seas humano. Verifique su correo electrónico y comience a utilizar su cuenta del sitio web.',
+            'token' =>  $random_token
+          ];
 
 
 
-         event(new Registered($user));
-
-         Auth::login($user);
+          Mail::to($request->email)->send(new WelcomeEmail($mailData));
 
 
-         return redirect(RouteServiceProvider::HOME);
 
-       }
+          event(new Registered($user));
 
-
-       if (empty($ip_country)) {
+          Auth::login($user);
 
 
-        $user = User::create([
-          'img' => 'user.png',
-          'banner' => 'userbanner.png',
-        // 'username' => $request->username,
-          // 'username' => $usernamelower,
-          'username' => $username_final,
-        // 'email' => $request->email,
-          'email' => $emaillower,
-          'email_verified_at' => now(),         
-          'password' => Hash::make($request->password),
-          'token' =>  $random_token,
-          'role_id' => 2,
-          'country_id' => 1, 
-          'statu_id' => 0,
-          'is_buyer' => 0,
-        // 'theme_color' => 'white',
-          'theme_color' => 'gray',
-          'rank_id' => 1,
-          'membership_start' => null,
-          'membership_end' => null,
-          'remember_token' => Str::random(10),
-          'terms' => 1,
-          'is_verified' => 0,
-        // 'is_ignored' => 0,
-          'is_banned' => 0,
-          'reason_id' => 1,
-          'url_profile' => null,
-          'url_patreon' => null,
-          'ip_adress' => $_SERVER['REMOTE_ADDR'],
-        ]);
+          return redirect(RouteServiceProvider::HOME);
 
-        $client = new Client();
-        $response = $client->post(env('APP_ENDPOINT_FACTORY').'/api/register/leads', [
-          'headers' => [
-        // 'Authorization' => 'Bearer your-token',
-            'Accept'        => 'application/json',
-          ],
-          'json' => [
+        }
+
+
+        if (empty($ip_country)) {
+
+
+          $user = User::create([
             'img' => 'user.png',
             'banner' => 'userbanner.png',
         // 'username' => $request->username,
@@ -288,153 +290,190 @@ class RegisteredUserController extends Controller
             'url_profile' => null,
             'url_patreon' => null,
             'ip_adress' => $_SERVER['REMOTE_ADDR'],
-          ],
-        ]);
+          ]);
 
-        $body = json_decode($response->getBody()->getContents(), true);
+          $client = new Client();
+          $response = $client->post(env('APP_ENDPOINT_FACTORY').'/api/register/leads', [
+            'headers' => [
+        // 'Authorization' => 'Bearer your-token',
+              'Accept'        => 'application/json',
+            ],
+            'json' => [
+              'img' => 'user.png',
+              'banner' => 'userbanner.png',
+        // 'username' => $request->username,
+          // 'username' => $usernamelower,
+              'username' => $username_final,
+        // 'email' => $request->email,
+              'email' => $emaillower,
+              'email_verified_at' => now(),         
+              'password' => Hash::make($request->password),
+              'token' =>  $random_token,
+              'role_id' => 2,
+              'country_id' => 1, 
+              'statu_id' => 0,
+              'is_buyer' => 0,
+        // 'theme_color' => 'white',
+              'theme_color' => 'gray',
+              'rank_id' => 1,
+              'membership_start' => null,
+              'membership_end' => null,
+              'remember_token' => Str::random(10),
+              'terms' => 1,
+              'is_verified' => 0,
+        // 'is_ignored' => 0,
+              'is_banned' => 0,
+              'reason_id' => 1,
+              'url_profile' => null,
+              'url_patreon' => null,
+              'ip_adress' => $_SERVER['REMOTE_ADDR'],
+            ],
+          ]);
+
+          $body = json_decode($response->getBody()->getContents(), true);
+
+        }else{
+
+          $user = User::create([
+            'img' => 'user.png',
+            'banner' => 'userbanner.png',
+        // 'username' => $request->username,
+          // 'username' => $usernamelower,
+            'username' => $username_final,
+        // 'email' => $request->email,
+            'email' => $emaillower,
+            'email_verified_at' => now(),         
+            'password' => Hash::make($request->password),
+            'token' =>  $random_token,
+            'role_id' => 2,
+            'country_id' => $ip_country->id, 
+            'statu_id' => 0,
+            'is_buyer' => 0,
+        // 'theme_color' => 'white',
+            'theme_color' => 'gray',
+            'rank_id' => 1,
+            'membership_start' => null,
+            'membership_end' => null,
+            'remember_token' => Str::random(10),
+            'terms' => 1,
+            'is_verified' => 0,
+        // 'is_ignored' => 0,
+            'is_banned' => 0,
+            'reason_id' => 1,
+            'url_profile' => null,
+            'url_patreon' => null,
+            'ip_adress' => $_SERVER['REMOTE_ADDR'],
+          ]);
+
+          $client = new Client();
+          $response = $client->post(env('APP_ENDPOINT_FACTORY').'/api/register/leads', [
+            'headers' => [
+        // 'Authorization' => 'Bearer your-token',
+              'Accept'        => 'application/json',
+            ],
+            'json' => [
+              'img' => 'user.png',
+              'banner' => 'userbanner.png',
+        // 'username' => $request->username,
+          // 'username' => $usernamelower,
+              'username' => $username_final,
+        // 'email' => $request->email,
+              'email' => $emaillower,
+              'email_verified_at' => now(),         
+              'password' => Hash::make($request->password),
+              'token' =>  $random_token,
+              'role_id' => 2,
+              'country_id' => 1, 
+              'statu_id' => 0,
+              'is_buyer' => 0,
+        // 'theme_color' => 'white',
+              'theme_color' => 'gray',
+              'rank_id' => 1,
+              'membership_start' => null,
+              'membership_end' => null,
+              'remember_token' => Str::random(10),
+              'terms' => 1,
+              'is_verified' => 0,
+        // 'is_ignored' => 0,
+              'is_banned' => 0,
+              'reason_id' => 1,
+              'url_profile' => null,
+              'url_patreon' => null,
+              'ip_adress' => $_SERVER['REMOTE_ADDR'],
+            ],
+          ]);
+
+          $body = json_decode($response->getBody()->getContents(), true);
+
+
+        }
+
+
+
+
+
+        event(new Registered($user));
+
+        Auth::login($user);
+
+
+
+
+        $mailData = [
+          'title' => 'Verificar Email',
+          'body' => 'Necesitamos asegurarnos de que seas humano. Verifique su correo electrónico y comience a utilizar su cuenta del sitio web.',
+          'token' =>  $random_token
+        ];
+
+
+
+        Mail::to($request->email)->send(new WelcomeEmail($mailData));
+
+
+        return redirect(RouteServiceProvider::HOME);
 
       }else{
 
-        $user = User::create([
-          'img' => 'user.png',
-          'banner' => 'userbanner.png',
-        // 'username' => $request->username,
-          // 'username' => $usernamelower,
-          'username' => $username_final,
-        // 'email' => $request->email,
-          'email' => $emaillower,
-          'email_verified_at' => now(),         
-          'password' => Hash::make($request->password),
-          'token' =>  $random_token,
-          'role_id' => 2,
-          'country_id' => $ip_country->id, 
-          'statu_id' => 0,
-          'is_buyer' => 0,
-        // 'theme_color' => 'white',
-          'theme_color' => 'gray',
-          'rank_id' => 1,
-          'membership_start' => null,
-          'membership_end' => null,
-          'remember_token' => Str::random(10),
-          'terms' => 1,
-          'is_verified' => 0,
-        // 'is_ignored' => 0,
-          'is_banned' => 0,
-          'reason_id' => 1,
-          'url_profile' => null,
-          'url_patreon' => null,
-          'ip_adress' => $_SERVER['REMOTE_ADDR'],
-        ]);
 
-        $client = new Client();
-        $response = $client->post(env('APP_ENDPOINT_FACTORY').'/api/register/leads', [
-          'headers' => [
-        // 'Authorization' => 'Bearer your-token',
-            'Accept'        => 'application/json',
-          ],
-          'json' => [
-            'img' => 'user.png',
-            'banner' => 'userbanner.png',
-        // 'username' => $request->username,
-          // 'username' => $usernamelower,
-            'username' => $username_final,
-        // 'email' => $request->email,
-            'email' => $emaillower,
-            'email_verified_at' => now(),         
-            'password' => Hash::make($request->password),
-            'token' =>  $random_token,
-            'role_id' => 2,
-            'country_id' => 1, 
-            'statu_id' => 0,
-            'is_buyer' => 0,
-        // 'theme_color' => 'white',
-            'theme_color' => 'gray',
-            'rank_id' => 1,
-            'membership_start' => null,
-            'membership_end' => null,
-            'remember_token' => Str::random(10),
-            'terms' => 1,
-            'is_verified' => 0,
-        // 'is_ignored' => 0,
-            'is_banned' => 0,
-            'reason_id' => 1,
-            'url_profile' => null,
-            'url_patreon' => null,
-            'ip_adress' => $_SERVER['REMOTE_ADDR'],
-          ],
-        ]);
-
-        $body = json_decode($response->getBody()->getContents(), true);
+       return back()->with('msg_exception', 'Realice la suma para verificar que no es un Robot!!');
+     }
 
 
-      }
-
-      
-
-
-
-      event(new Registered($user));
-
-      Auth::login($user);
-
-
-
-
-      $mailData = [
-        'title' => 'Verificar Email',
-        'body' => 'Necesitamos asegurarnos de que seas humano. Verifique su correo electrónico y comience a utilizar su cuenta del sitio web.',
-        'token' =>  $random_token
-      ];
-
-
-
-      Mail::to($request->email)->send(new WelcomeEmail($mailData));
-
-
-      return redirect(RouteServiceProvider::HOME);
-
-    }else{
-
-
-     return back()->with('msg_exception', 'Realice la suma para verificar que no es un Robot!!');
    }
 
 
- }
-
-
- public function activation()
- {
+   public function activation()
+   {
 
 
 
-  if (!empty($_GET['token']) && isset($_GET['token'])) {
+    if (!empty($_GET['token']) && isset($_GET['token'])) {
 
-    $token = $_GET['token'];
+      $token = $_GET['token'];
 
-    $useremail = User::select('email')    
-    ->where('token', $token)    
-    ->first();
+      $useremail = User::select('email')    
+      ->where('token', $token)    
+      ->first();
 
 
-    $readmessages = DB::table('users')
-    ->where('email', $useremail->email)
-    ->update([
-      'statu_id' => 1,
-      'is_verified' => 1
-    ]);
-    
+      $readmessages = DB::table('users')
+      ->where('email', $useremail->email)
+      ->update([
+        'statu_id' => 1,
+        'is_verified' => 1
+      ]);
 
-    return view('auth.msg_activation');
+
+      return view('auth.msg_activation');
 
 
 
 
-  }else{
-    throw new \Exception('Page not Found');
+    }else{
+      throw new \Exception('Page not Found');
+
+    }
+
 
   }
-
-
-}
 }
