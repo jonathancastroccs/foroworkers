@@ -14,7 +14,7 @@
 
 ## Introduction
 
-The Foroworkers forum software is one of the open source projects using PHP and Laravel to manage self-hosted online communities on your server.
+laravel-enterprise-boilerplate-saas-crm-multi-tenant The Foroworkers forum software is one of the open source projects using PHP and Laravel to manage self-hosted online communities on your server.
 
 <p align="center">
   <img alt="GitHub" src="https://img.shields.io/github/license/foroworkers/foroworkers?style=for-the-badge">
